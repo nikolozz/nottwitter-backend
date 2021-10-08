@@ -1,0 +1,22 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type File {
+  key: String!
+  url: String!
+}
+
+type Query {
+  healthCheck: String!
+  generatePresignedUrl(key: String!): String!
+}
+
+type Mutation {
+  addAvatar(input: UploadAvatarInput!): File!
+}
+
+input UploadAvatarInput {
+  key: String!
+  url: String!
+}
