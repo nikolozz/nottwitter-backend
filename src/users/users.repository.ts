@@ -1,12 +1,12 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PostgresErrorCode } from '../database/enums/postgres-error-codes.enum';
-import { PrismaService } from '../database/prisma/prisma.service';
+import { PrismaRepository } from '../database/prisma/prisma.repository';
 import { UpdateUser } from './interfaces/update-user.interface';
 import { User } from './interfaces/user.interface';
 
 @Injectable()
 export class UsersRepository {
-  constructor(private readonly userRepository: PrismaService) {}
+  constructor(private readonly userRepository: PrismaRepository) {}
 
   getByUsername(username: string) {
     return this.userRepository.user.findFirst({
@@ -20,6 +20,10 @@ export class UsersRepository {
       where: { id },
       rejectOnNotFound: true,
     });
+  }
+
+  getByIds(ids: number[]) {
+    return this.userRepository.user.findMany({ where: { id: { in: ids } } });
   }
 
   async create(user: User) {

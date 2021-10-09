@@ -19,6 +19,10 @@ export class UsersService {
     return this.usersRepository.getById(id);
   }
 
+  getByIds(ids: number[]) {
+    return this.usersRepository.getByIds(ids);
+  }
+
   create(user: User) {
     return this.usersRepository.create(user);
   }

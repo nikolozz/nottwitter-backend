@@ -7,6 +7,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FilesModule } from './files/files.module';
 import { AwsModule } from './aws/aws.module';
+import { TweetsModule } from './tweets/tweets.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AwsModule } from './aws/aws.module';
     UsersModule,
     AuthenticationModule,
     FilesModule,
+    TweetsModule,
   ],
 })
 export class AppModule {}

@@ -4,7 +4,7 @@ import { GqlJwtGuard } from 'src/authentication/guards/gql-jwt.guard';
 import { RequestWithUser } from 'src/authentication/interfaces/request-with-user.interface';
 import { UploadAvatarInput } from './inputs/upload-avatar.input';
 import { UsersService } from './users.service';
-import { File } from './models/file.model';
+import { File } from '../files/models/file.model';
 
 @Resolver()
 export class UsersResolver {

@@ -1,10 +1,10 @@
 import { File } from './interfaces/file.interface';
-import { PrismaService } from '../database/prisma/prisma.service';
+import { PrismaRepository } from '../database/prisma/prisma.repository';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class FilesRepository {
-  constructor(private readonly filesRepository: PrismaService) {}
+  constructor(private readonly filesRepository: PrismaRepository) {}
 
   create(file: File) {
     return this.filesRepository.file.create({ data: file });
