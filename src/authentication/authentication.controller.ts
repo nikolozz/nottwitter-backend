@@ -36,7 +36,7 @@ export class AuthenticationController {
     response.send(request.user);
   }
 
-  @Post('/register')
+  @Post('/signup')
   register(@Body() registerDto: RegisterDto) {
     return this.authenticationService.register(registerDto);
   }
