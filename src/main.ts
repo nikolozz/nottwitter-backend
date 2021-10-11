@@ -5,16 +5,21 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
-  const allowedOrigins: string[] = config.get('FRONTEND_URL').split(',');
 
-  app.enableCors({
-    origin: (origin, cb) => {
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        return cb(null, origin);
-      }
-      return cb(new Error(`Origin ${origin} is not allowed`));
-    },
-  });
+  const allowedOrigins: string[] = config.get('FRONTEND_URL').split(',');
+  const corsOtions =
+    config.get('NODE_ENV') === 'production'
+      ? {
+          origin: (origin, cb) => {
+            if (allowedOrigins.indexOf(origin) !== -1) {
+              return cb(null, origin);
+            }
+            return cb(new Error(`Origin ${origin} is not allowed`));
+          },
+        }
+      : {};
+
+  app.enableCors(corsOtions);
   await app.listen(3000);
 }
 bootstrap();

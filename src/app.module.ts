@@ -8,6 +8,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { FilesModule } from './files/files.module';
 import { AwsModule } from './aws/aws.module';
 import { TweetsModule } from './tweets/tweets.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './authentication/guards/roles.guard';
 
 @Module({
   imports: [
@@ -34,5 +36,6 @@ import { TweetsModule } from './tweets/tweets.module';
     FilesModule,
     TweetsModule,
   ],
+  providers: [{ provide: APP_GUARD, useClass: RolesGuard }],
 })
 export class AppModule {}

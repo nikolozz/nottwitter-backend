@@ -33,7 +33,18 @@ export class UsersRepository {
       if (e.code === PostgresErrorCode.UniqueViolation) {
         throw new InternalServerErrorException('Unique constraint violation');
       }
+      throw e;
     }
+  }
+
+  async delete(id: number) {
+    const deleteResponse = await this.userRepository.user.delete({
+      where: { id },
+    });
+    if (deleteResponse) {
+      return true;
+    }
+    return false;
   }
 
   updateAvatar(id: number, user: UpdateUser) {

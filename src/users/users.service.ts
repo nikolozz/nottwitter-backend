@@ -39,4 +39,8 @@ export class UsersService {
     });
     return file;
   }
+
+  async deleteUser(userId: number) {
+    return this.usersRepository.delete(userId);
+  }
 }
