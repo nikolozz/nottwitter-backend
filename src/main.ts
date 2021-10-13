@@ -19,7 +19,7 @@ async function bootstrap() {
         }
       : {};
 
-  app.enableCors(corsOtions);
+  app.enableCors({ ...corsOtions, exposedHeaders: ['Authentication'] });
   await app.listen(3000);
 }
 bootstrap();

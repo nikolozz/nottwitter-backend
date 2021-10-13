@@ -40,6 +40,14 @@ export class UsersService {
     return file;
   }
 
+  async getAvatar(userId: number) {
+    const { avatarId } = await this.usersRepository.getById(userId);
+    if (!avatarId) {
+      return null;
+    }
+    return this.filesService.getFile(avatarId);
+  }
+
   async deleteUser(userId: number) {
     return this.usersRepository.delete(userId);
   }

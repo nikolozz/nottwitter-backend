@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 import { UsersService } from '../users/users.service';
+import { Role } from './enums/role.enum';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { Credentials } from './interfaces/login.interface';
 import { RegisterUser } from './interfaces/register.interface';
@@ -20,8 +21,8 @@ export class AuthenticationService {
     return user;
   }
 
-  async login(id: number, username: string) {
-    const payload: JwtPayload = { id, username };
+  async login(id: number, username: string, roles: Role[]) {
+    const payload: JwtPayload = { id, username, roles };
     return this.jwtService.sign(payload);
   }
 
@@ -33,7 +34,7 @@ export class AuthenticationService {
   private async isPasswordMatch(password, encryptedPassword) {
     const isMatch = await argon2.verify(encryptedPassword, password);
     if (!isMatch) {
-      throw new NotFoundException();
+      throw new UnauthorizedException();
     }
     return true;
   }

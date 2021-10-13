@@ -7,6 +7,13 @@ type File {
   url: String!
 }
 
+type User {
+  id: Int!
+  email: String!
+  username: String!
+  avatar: File!
+}
+
 type Tweet {
   title: String!
   content: String!
@@ -20,14 +27,8 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type User {
-  email: String!
-  username: String!
-  avatar: File!
-}
-
 type Query {
-  healthCheck: String!
+  me: User!
   generatePresignedUrl(key: String!): String!
   tweets: [Tweet!]!
   tweet(id: Int!): Tweet!
@@ -35,6 +36,7 @@ type Query {
 
 type Mutation {
   addAvatar(input: UploadAvatarInput!): File!
+  deleteUser(id: Int!): Boolean!
   createTweet(input: CreateTweeetInput!): Tweet!
   deleteTweet(id: Int!): Tweet!
 }

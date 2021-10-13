@@ -30,8 +30,8 @@ export class AuthenticationController {
   @UseGuards(LocalGuard)
   @HttpCode(HttpStatus.OK)
   async login(@Req() request: RequestWithUser, @Res() response: Response) {
-    const { id, username } = request.user;
-    const token = await this.authenticationService.login(id, username);
+    const { id, username, roles } = request.user;
+    const token = await this.authenticationService.login(id, username, roles);
     response.setHeader('Authentication', token);
     response.send(request.user);
   }
