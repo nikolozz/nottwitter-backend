@@ -16,12 +16,15 @@ import { TweetsService } from './tweets.service';
 import { Tweet } from './models/tweet.model';
 import { User } from '../users/models/user.model';
 import { TweetLoaders } from './tweets.loader';
+import { CommentsService } from '../comments/comments.service';
+import { Comment } from '../comments/models/comment.model';
 
 @Resolver(() => Tweet)
 export class TweetsResolver {
   constructor(
     private readonly tweetsService: TweetsService,
     private readonly tweetLoaders: TweetLoaders,
+    private readonly commentsService: CommentsService,
   ) {}
 
   @Query(() => [Tweet])
@@ -61,5 +64,10 @@ export class TweetsResolver {
   tweetAuthor(@Parent() tweet: Tweet) {
     const { authorId } = tweet;
     return this.tweetLoaders.batchAuthors.load(authorId);
+  }
+
+  @ResolveField(() => [Comment])
+  comments(@Parent() tweet: Tweet) {
+    return this.commentsService.getCommentsByTweetId(tweet.id);
   }
 }

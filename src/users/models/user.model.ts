@@ -12,6 +12,15 @@ export class User {
   @Field()
   username: string;
 
-  @Field()
-  avatar: File;
+  @Field({ nullable: true })
+  bio?: string;
+
+  @Field({ nullable: true })
+  website?: string;
+
+  @Field({ nullable: true })
+  location?: string;
+
+  @Field({ nullable: true })
+  avatar?: File;
 }

@@ -17,7 +17,7 @@ export class TweetsRepository {
     });
   }
 
-  create(tweet: CreateTweet) {
+  create(tweet: CreateTweet & { author: any }) {
     return this.tweetsRepository.tweet.create({ data: tweet });
   }
 

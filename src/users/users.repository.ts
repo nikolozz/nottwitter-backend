@@ -47,6 +47,13 @@ export class UsersRepository {
     return false;
   }
 
+  update(id: number, user: UpdateUser) {
+    return this.userRepository.user.update({
+      where: { id },
+      data: user,
+    });
+  }
+
   updateAvatar(id: number, user: UpdateUser) {
     return this.userRepository.user.update({
       where: { id },

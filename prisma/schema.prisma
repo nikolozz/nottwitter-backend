@@ -1,3 +1,12 @@
+model Comment {
+  id       Int    @id @default(autoincrement())
+  content  String
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId Int
+  tweet    Tweet  @relation(fields: [tweetId], references: [id])
+  tweetId  Int
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -15,23 +24,34 @@ model File {
 }
 
 model Tweet {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   title     String
   content   String
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  Int
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String   @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  username  String    @unique
   password  String
-  avatar    File?    @relation(fields: [avatarId], references: [id])
+  role      Role?
+  avatar    File?     @relation(fields: [avatarId], references: [id])
   avatarId  Int?
   tweets    Tweet[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  bio       String?
+  location  String?
+  website   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  Comment   Comment[]
+}
+
+enum Role {
+  ADMIN
+  USER
 }

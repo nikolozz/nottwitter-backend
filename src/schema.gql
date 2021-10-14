@@ -11,7 +11,10 @@ type User {
   id: Int!
   email: String!
   username: String!
-  avatar: File!
+  bio: String
+  website: String
+  location: String
+  avatar: File
 }
 
 type Tweet {
@@ -35,10 +38,18 @@ type Query {
 }
 
 type Mutation {
+  updateUser(input: UpdateInput!): User!
   addAvatar(input: UploadAvatarInput!): File!
   deleteUser(id: Int!): Boolean!
   createTweet(input: CreateTweeetInput!): Tweet!
   deleteTweet(id: Int!): Tweet!
+}
+
+input UpdateInput {
+  username: String
+  bio: String
+  website: String
+  location: String
 }
 
 input UploadAvatarInput {

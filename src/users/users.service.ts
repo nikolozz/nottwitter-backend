@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { FilesService } from 'src/files/files.service';
 import { AddAvatar } from './interfaces/add-avatar.interface';
+import { UpdateUser } from './interfaces/update-user.interface';
 import { User } from './interfaces/user.interface';
 import { UsersRepository } from './users.repository';
 
@@ -12,11 +13,20 @@ export class UsersService {
   ) {}
 
   getByUsername(username: string) {
-    return this.usersRepository.getByUsername(username);
+    try {
+      return this.usersRepository.getByUsername(username);
+    } catch (error) {
+      console.log(error);
+      throw new UnauthorizedException({ error });
+    }
   }
 
   getById(id: number) {
-    return this.usersRepository.getById(id);
+    try {
+      return this.usersRepository.getById(id);
+    } catch (error) {
+      throw new UnauthorizedException({ error });
+    }
   }
 
   getByIds(ids: number[]) {
@@ -25,6 +35,10 @@ export class UsersService {
 
   create(user: User) {
     return this.usersRepository.create(user);
+  }
+
+  async updateUser(id: number, body: UpdateUser) {
+    return this.usersRepository.update(id, body);
   }
 
   async addAvatar(userId: number, avatar: AddAvatar) {

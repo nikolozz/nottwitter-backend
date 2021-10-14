@@ -3,6 +3,9 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class Tweet {
   @Field()
+  id: number;
+
+  @Field()
   title: string;
 
   @Field()

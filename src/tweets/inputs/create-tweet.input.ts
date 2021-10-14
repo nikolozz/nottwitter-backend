@@ -7,4 +7,6 @@ export class CreateTweeetInput {
 
   @Field()
   content: string;
+
+  author: any;
 }

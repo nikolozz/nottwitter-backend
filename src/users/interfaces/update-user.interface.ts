@@ -1,4 +1,7 @@
 export interface UpdateUser {
-  username: string;
+  username?: string;
   avatar?: any;
+  bio?: string;
+  location?: string;
+  website?: string;
 }

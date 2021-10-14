@@ -17,6 +17,7 @@ import { File } from '../files/models/file.model';
 import { Roles } from '../authentication/decorators/set-role.decorator';
 import { Role } from '../authentication/enums/role.enum';
 import { User } from './models/user.model';
+import { UpdateInput } from './inputs/update-user.input';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -27,6 +28,16 @@ export class UsersResolver {
   me(@Context() context: { req: RequestWithUser }) {
     const { user } = context.req;
     return this.usersService.getById(user.id);
+  }
+
+  @UseGuards(GqlJwtGuard)
+  @Mutation(() => User)
+  updateUser(
+    @Context() context: { req: RequestWithUser },
+    @Args('input') input: UpdateInput,
+  ) {
+    const { user } = context.req;
+    return this.usersService.updateUser(user.id, input);
   }
 
   @UseGuards(GqlJwtGuard)
