@@ -1,0 +1,8 @@
+model Like {
+  id      Int      @id @default(autoincrement())
+  likedAt DateTime @default(now())
+  tweet   Tweet    @relation(fields: [tweetId], references: [id])
+  tweetId Int
+  owner   User     @relation(fields: [ownerId], references: [id])
+  ownerId Int
+}

@@ -18,6 +18,8 @@ import { User } from '../users/models/user.model';
 import { TweetLoaders } from './tweets.loader';
 import { CommentsService } from '../comments/comments.service';
 import { Comment } from '../comments/models/comment.model';
+import { Like } from 'src/likes/models/like.model';
+import { LikesDataLoader } from 'src/likes/likes.loader';
 
 @Resolver(() => Tweet)
 export class TweetsResolver {
@@ -25,6 +27,7 @@ export class TweetsResolver {
     private readonly tweetsService: TweetsService,
     private readonly tweetLoaders: TweetLoaders,
     private readonly commentsService: CommentsService,
+    private readonly likesLoader: LikesDataLoader,
   ) {}
 
   @Query(() => [Tweet])
@@ -66,8 +69,14 @@ export class TweetsResolver {
     return this.tweetLoaders.batchAuthors.load(authorId);
   }
 
-  @ResolveField(() => [Comment])
+  @ResolveField(() => [Comment], { nullable: true })
   comments(@Parent() tweet: Tweet) {
+    // TODO move to Data Loader
     return this.commentsService.getCommentsByTweetId(tweet.id);
+  }
+
+  @ResolveField(() => [Like], { nullable: true })
+  likes(@Parent() tweet: Tweet) {
+    return this.likesLoader.batchLikes.load(tweet.id);
   }
 }

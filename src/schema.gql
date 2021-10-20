@@ -17,18 +17,34 @@ type User {
   avatar: File
 }
 
-type Tweet {
-  title: String!
+type Comment {
+  id: Int!
   content: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   author: User!
+}
+
+type Like {
+  id: Int!
+  tweetId: Int!
+  authorId: Int!
+  likedAt: DateTime!
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Tweet {
+  id: Float!
+  title: String!
+  content: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  author: User!
+  comments: [Comment!]
+  likes: [Like!]
+}
 
 type Query {
   me: User!
@@ -43,6 +59,10 @@ type Mutation {
   deleteUser(id: Int!): Boolean!
   createTweet(input: CreateTweeetInput!): Tweet!
   deleteTweet(id: Int!): Tweet!
+  addComment(input: CreateComment!): Comment!
+  deleteComment(id: Int!): Boolean!
+  like(tweetId: Int!): Like!
+  deleteLike(likeId: Int!): Boolean!
 }
 
 input UpdateInput {
@@ -59,5 +79,10 @@ input UploadAvatarInput {
 
 input CreateTweeetInput {
   title: String!
+  content: String!
+}
+
+input CreateComment {
+  tweetId: Int!
   content: String!
 }

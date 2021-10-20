@@ -11,6 +11,7 @@ import { TweetsModule } from './tweets/tweets.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './authentication/guards/roles.guard';
 import { CommentsModule } from './comments/comments.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CommentsModule } from './comments/comments.module';
     FilesModule,
     TweetsModule,
     CommentsModule,
+    LikesModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: RolesGuard }],
 })
